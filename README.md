@@ -44,6 +44,7 @@ Follow the steps below to get your Gallery online. You will be using GitHub web 
 ```
 
 6. Edit the sidebar file with your socials
+
 Edit `photoarchive\partials\content.hbs` line 27+
 
 ```
@@ -53,8 +54,9 @@ Edit `photoarchive\partials\content.hbs` line 27+
                     <li class="flickr"><a href="https://flickr.com/photos/" target="_blank"><i class="fa fa-flickr"></i></a></li>
                 </ul>
 ```
-`
+
 6. Edit the github workflow under `.github/workflows/gallery.yml` 
+
   On line 28. Enter your Github username
   `          docker login --username <Github_Username> --password ${{ secrets.GH_PAT }} ghcr.io`
 
