@@ -55,7 +55,7 @@ Edit `photoarchive\partials\content.hbs` line 27+
                 </ul>
 ```
 
-6. Edit the github workflow under `.github/workflows/gallery.yml` 
+7. Edit the github workflow under `.github/workflows/gallery.yml` 
 
   On line 28. Enter your Github username
   `          docker login --username <Github_Username> --password ${{ secrets.GH_PAT }} ghcr.io`
@@ -69,9 +69,9 @@ You can chose from any of the themes below to set the value for theme key:
 
 You can learn more about the configuration file here: https://thumbsup.github.io/docs/3-configuration/usage/. Click on the commit changes button below the page.
 
-7. Go to actions tab of your new repository, Wait till the Initial build completes. It will show you the following check mark:
+8. Go to actions tab of your new repository, Wait till the Initial build completes. It will show you the following check mark:
 ![actions](https://user-images.githubusercontent.com/8397274/103133265-7af54100-46cf-11eb-9cef-38fa122142aa.png)
-8. You are all set with your new awesome gallery! Add Albums or photos to make it live.
+9. You are all set with your new awesome gallery! Add Albums or photos to make it live.
 
 #### Demo Video
 [![demo](http://img.youtube.com/vi/uYh7b2V0pyA/0.jpg)](http://www.youtube.com/watch?v=uYh7b2V0pyA "Github Pages Gallery Demo")
