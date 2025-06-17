@@ -1,0 +1,48 @@
+name: Publish Gallery
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+jobs:
+  deploy:
+    name: Publish Gallery to Github Pages
+    if: ${{ github.repository != 'gautamkrishnar/github-pages-gallery' && github.event.head_commit.message != '' && github.event.head_commit.message != 'Initial commit' }}
+    runs-on: ubuntu-latest
+    env:
+      NODE_PATH: /thumbsup/node_modules
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Build Gallery 🔧
+        run: |
+          docker login --username <Github_Username> --password ${{ secrets.GH_PAT }} ghcr.io
+          docker run -v "$(pwd):/work" ghcr.io/rhettus/thumbsup_website /bin/sh -c "cd /work && npm install moment && thumbsup --config /work/config.json && cp -pr /work/assets /work/build_output"
+      - name: Debug - Check for symlinks and hard links
+        run: |
+          echo "Checking for symlinks in build_output..."
+          find build_output -type l -exec ls -l {} \;
+          
+          echo "Checking for hard links in build_output..."
+          find build_output -type f -links +1 -exec ls -l {} \;    
+      - name: Package and upload artifact 📦
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages  # ⚠️ GitHub Pages now requires this artifact name
+          path: build_output
+          retention-days: 1  # Ensures cleanup after deployment
+      - name: Deploy to Github Pages 🚀
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages  # ⚠️ Must match upload name exactly
+          token: ${{ secrets.GITHUB_TOKEN }}
+
